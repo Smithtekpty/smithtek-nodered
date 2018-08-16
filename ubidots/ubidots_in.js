@@ -1,14 +1,14 @@
 module.exports = function (RED) {
   var mqtt = require('mqtt');
 
-  function getClient(self, endpoint_url, label_device, label_variable, token) {
+  function getClient(self, label_device, label_variable, token) {
     self.status({ fill: "green", shape: "ring", text: "ubidots.connecting" });
 
     if(this.client !== null && this.client !== undefined) {
       this.client.end(true, function() {});
     }
 
-    var client = mqtt.connect('mqtt://' + endpoint_url, {username: token, password: ""});
+    var client = mqtt.connect('mqtt://industrial.api.ubidots.com', {username: token, password: ""});
     this.client = client;
 
     client.on("error", function () {
@@ -57,21 +57,15 @@ module.exports = function (RED) {
     });
   }
 
-  function UbidotsNode(n) {
+  function SmithTekNode(n) {
     RED.nodes.createNode(this, n);
     var self = this;
 
-    var endpoint_urls = {
-      business: 'industrial.api.ubidots.com',
-      educational: 'things.ubidots.com'
-    };
-
     var label_device = n.device_label || n.label_device;
     var label_variable = n.label_variable;
-    var endpoint_url = endpoint_urls[n.tier] || endpoint_urls['business'];
     var token = n.token;
 
-    getClient(self, endpoint_url, label_device, label_variable, token);
+    getClient(self, label_device, label_variable, token);
 
     this.on("error", function () {
       if(self.client !== null && self.client !== undefined) {
@@ -95,5 +89,5 @@ module.exports = function (RED) {
     });
   }
 
-  RED.nodes.registerType("ubidots_in", UbidotsNode);
+  RED.nodes.registerType("smithtek_in", SmithTekNode);
 };

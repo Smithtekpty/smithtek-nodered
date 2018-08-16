@@ -1,16 +1,5 @@
 <script type="text/x-red" data-template-name="smithtek_out">
     <div class="form-row">
-        <label for="node-input-tier">
-            <i class="icon-flag"></i>
-            <span data-i18n="ubidots.select_tier"></span>
-        </label>
-        <select id="node-input-tier">
-            <option value="business">Ubidots</option>
-            <option value="educational">Ubidots for Education</option>
-        </select>
-    </div>
-
-    <div class="form-row">
         <label for="node-input-name">
             <i class="icon-tag"></i>
             <span data-i18n="ubidots.name"></span>
@@ -76,8 +65,7 @@
             name : {value: ""},
             token : {value: ""},
             label_device: {value: ""},
-            device_label: {value: ""},
-            tier: { value: 'business' }
+            device_label: {value: ""}
         },
         inputs : 1,
         outputs : 0,
