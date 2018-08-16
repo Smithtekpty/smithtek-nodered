@@ -1,4 +1,4 @@
-<script type="text/x-red" data-template-name="ubidots_in">
+<script type="text/x-red" data-template-name="smithtek_in">
     <div class="form-row">
         <label for="node-input-tier">
             <i class="icon-flag"></i>
@@ -44,7 +44,7 @@
 </script>
 
 
-<script type="text/x-red" data-help-name="ubidots_in">
+<script type="text/x-red" data-help-name="smithtek_in">
     <p>Fetch the last value from Ubidots and send it as a message to other nodes.</p>
 
     <p>
@@ -86,9 +86,9 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('ubidots_in', {
+    RED.nodes.registerType('smithtek_in', {
         category: 'input',
-        color : "#5996F7",
+        color : "#B9B6B8",
         defaults : {
             tier: { value: 'business' },
             name : {value : ""},
@@ -100,9 +100,9 @@
         inputs : 0,
         outputs : 1,
 
-        icon : "ubidots.png",
+        icon : "smithtek.png",
         label : function() {
-            return this.name || this.to || "ubidots input";
+            return this.name || this.to || "smithtek input";
         },
         labelStyle : function() {
             return this.name ? "node_label_italic" : "";
