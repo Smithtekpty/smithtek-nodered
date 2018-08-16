@@ -26,7 +26,7 @@
 
 
 <script type="text/x-red" data-help-name="smithtek_in">
-    <p>Fetch the last value from Ubidots and send it as a message to other nodes.</p>
+    <p>Fetch the last value from SmithTek and send it as a message to other nodes.</p>
 
     <p>
     Uses the <a href="https://github.com/mqttjs/MQTT.js" target="_blank">MQTT</a> to make the connection and suscribe
@@ -39,17 +39,7 @@
 
     <ul>
         <li>
-            <b>Account type</b> - The type of your account, whether it is a Ubidots or Ubidots for
-            Education account.
-        </li>
-        <li>
-            <b>Name</b> - The name to identify your MQTT client.
-        </li>
-        <li>
-            <b>Token</b> - Your Ubidots' account token. You can find it by following
-            <a href="http://help.ubidots.com/user-guides/find-your-token-from-your-ubidots-account" target="_blank">
-                this tutorial
-            </a>.
+            <b>Token</b> - Your SmithTek account token.
         </li>
         <li>
             <b>Device label</b> - The label of the Device that contains the Variable where you want to fetch the values.
@@ -58,11 +48,6 @@
             <b>Variable label</b> - The label of the Variable that you want to fetch the values from.
         </li>
     </ul>
-    </p>
-
-    <p>
-    Refer to the <a href="https://ubidots.com/docs/api/mqtt.html" target="_blank">Ubidots documentation</a> for more
-    information about the functionality of the MQTT broker.
     </p>
 </script>
 
