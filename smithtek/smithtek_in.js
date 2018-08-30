@@ -46,6 +46,10 @@ module.exports = function (RED) {
       var topic = "/v1.6/devices/" + label_device + "/" + label_variable;
       var options = {};
 
+      if (simple_node) {
+        topic += "/lv";
+      }
+
       self.status({ fill: "green", shape: "dot", text: "smithtek.connected" });
       options[topic] = 1;
 
