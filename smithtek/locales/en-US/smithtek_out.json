@@ -6,6 +6,7 @@
         },
         "device_label": {"label": "Device Label", "placeholder": "Device label"},
         "label_variable": {"label": "Variable Label", "placeholder": "Variable label"},
+        "simple_node": {"label": "Simple Node"},
         "varid": "Variable ID",
         "name": "Name",
         "select_tier": "Account Type",

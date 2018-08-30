@@ -6,6 +6,7 @@
         },
         "device_label": { "label": "Device", "placeholder": "Device label" },
         "label_variable": { "label": "Variable", "placeholder": "Variable label" },
+        "simple_node": {"label": "Simple Node"},
         "varid": "Variable ID",
         "name": "Name",
         "connecting": "Connecting...",

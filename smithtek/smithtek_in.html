@@ -22,6 +22,14 @@
         </label>
         <input type="text" id="node-input-label_variable" data-i18n="[placeholder]smithtek.label_variable.placeholder" />
     </div>
+
+    <div class="form-row">
+        <label for="node-input-simple_node static-label">
+            <i class="icon-tag"></i>
+            <span data-i18n="smithtek.simple_node.label"></span>
+        </label>
+        <input type="checkbox" id="node-input-simple_node" style="/*! text-align: left; */width: auto;vertical-align: sub;"/>
+    </div>
 </script>
 
 
@@ -49,6 +57,11 @@
         </li>
     </ul>
     </p>
+
+    <h2>Simple Node</h2>
+    <p>
+        Simple node mode subscribes to a topic to retrieve only the last value of the variable using the SmithTek API.
+    </p>
 </script>
 
 <script type="text/javascript">
@@ -59,7 +72,8 @@
             token : {value : ""},
             device_label : {value : ""},
             label_device : {value: ""},
-            label_variable : {value: ""}
+            label_variable : {value: ""},
+            simple_node : {value: true},
         },
         inputs : 0,
         outputs : 1,
