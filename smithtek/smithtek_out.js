@@ -1,7 +1,7 @@
 module.exports = function (RED) {
     var mqtt = require("mqtt");
 
-    function postUbidots(self, label_device, values, token) {
+    function postSmithTek(self, label_device, values, token) {
         var client = mqtt.connect('mqtt://industrial.api.ubidots.com', {username: token, password: ""});
 
         client.on("connect", function () {
@@ -13,11 +13,11 @@ module.exports = function (RED) {
                     client.end(true, function () {});
                 }
             );
-            self.status({ fill: "green", shape: "dot", text: "ubidots.published" });
+            self.status({ fill: "green", shape: "dot", text: "smithtek.published" });
         });
 
         client.on('error', function (msg) {
-            self.status({ fill: "red", shape: "ring", text: "ubidots.error_connecting" });
+            self.status({ fill: "red", shape: "ring", text: "smithtek.error_connecting" });
         });
     }
 
@@ -34,10 +34,10 @@ module.exports = function (RED) {
                 values = JSON.stringify(values);
             }
 
-            self.status({ fill: "green", shape: "ring", text: "ubidots.connecting" });
-            postUbidots(self, label_device, values, token);
+            self.status({ fill: "green", shape: "ring", text: "smithtek.connecting" });
+            postSmithTek(self, label_device, values, token);
         });
     }
 
-    RED.nodes.registerType("ubidots_out", SmithTek);
+    RED.nodes.registerType("smithtek_out", SmithTek);
 };

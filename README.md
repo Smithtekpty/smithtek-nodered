@@ -1,6 +1,6 @@
 # Node-RED SmithTek Node
 
-This is a [Node-RED](http://nodered.org) node used to interact with the Ubidots service. It publishes and suscribes to one or multiple variables.
+This is a [Node-RED](http://nodered.org) node used to interact with the SmithTek service. It publishes and suscribes to one or multiple variables.
 
 ## Installation
 

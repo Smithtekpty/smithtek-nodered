@@ -2,7 +2,7 @@ module.exports = function (RED) {
   var mqtt = require('mqtt');
 
   function getClient(self, label_device, label_variable, token) {
-    self.status({ fill: "green", shape: "ring", text: "ubidots.connecting" });
+    self.status({ fill: "green", shape: "ring", text: "smithtek.connecting" });
 
     if(this.client !== null && this.client !== undefined) {
       this.client.end(true, function() {});
@@ -13,7 +13,7 @@ module.exports = function (RED) {
 
     client.on("error", function () {
       client.end(true, function() {});
-      self.status({ fill: "red", shape: "ring", text: "ubidots.error_connecting" });
+      self.status({ fill: "red", shape: "ring", text: "smithtek.error_connecting" });
     });
 
     client.on('close', function(){
@@ -24,7 +24,7 @@ module.exports = function (RED) {
       var topic = "/v1.6/devices/" + label_device + "/" + label_variable;
       var options = {};
 
-      self.status({ fill: "green", shape: "dot", text: "ubidots.connected" });
+      self.status({ fill: "green", shape: "dot", text: "smithtek.connected" });
       options[topic] = 1;
 
       client.subscribe(options, function (err, granted) {
@@ -33,7 +33,7 @@ module.exports = function (RED) {
             self.emit("input", {payload: JSON.parse(message.toString())});
           });
         } catch (e) {
-          self.status({ fill: "red", shape: "ring", text: "ubidots.error_connecting" });
+          self.status({ fill: "red", shape: "ring", text: "smithtek.error_connecting" });
         }
       });
     });
@@ -42,7 +42,7 @@ module.exports = function (RED) {
       var topic = "/v1.6/devices/" + label_device + "/" + label_variable;
       var options = {};
 
-      self.status({ fill: "green", shape: "dot", text: "ubidots.connected" });
+      self.status({ fill: "green", shape: "dot", text: "smithtek.connected" });
       options[topic] = 1;
 
       client.subscribe(options, function (err, granted) {
@@ -51,7 +51,7 @@ module.exports = function (RED) {
             self.emit("input", {payload: JSON.parse(message.toString())});
           });
         } catch (e) {
-          self.status({ fill: "red", shape: "ring", text: "ubidots.error_connecting" });
+          self.status({ fill: "red", shape: "ring", text: "smithtek.error_connecting" });
         }
       });
     });
@@ -71,7 +71,7 @@ module.exports = function (RED) {
       if(self.client !== null && self.client !== undefined) {
         self.client.end(true, function(){});
       }
-      self.status({ fill: "red", shape: "ring", text: "ubidots.error_connecting" });
+      self.status({ fill: "red", shape: "ring", text: "smithtek.error_connecting" });
     });
 
     this.on("close", function(){
