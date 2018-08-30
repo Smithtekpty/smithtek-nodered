@@ -1,7 +1,7 @@
 module.exports = function (RED) {
   var mqtt = require('mqtt');
 
-  function getClient(self, label_device, label_variable, token) {
+  function getClient(self, label_device, label_variable, token, simple_node) {
     self.status({ fill: "green", shape: "ring", text: "smithtek.connecting" });
 
     if(this.client !== null && this.client !== undefined) {
@@ -22,6 +22,10 @@ module.exports = function (RED) {
 
     client.on("reconnect", function () {
       var topic = "/v1.6/devices/" + label_device + "/" + label_variable;
+      if (simple_node) {
+        topic += "/lv";
+      }
+
       var options = {};
 
       self.status({ fill: "green", shape: "dot", text: "smithtek.connected" });
@@ -64,8 +68,9 @@ module.exports = function (RED) {
     var label_device = n.device_label || n.label_device;
     var label_variable = n.label_variable;
     var token = n.token;
+    var simple_node = n.simple_node;
 
-    getClient(self, label_device, label_variable, token);
+    getClient(self, label_device, label_variable, token, simple_node);
 
     this.on("error", function () {
       if(self.client !== null && self.client !== undefined) {
