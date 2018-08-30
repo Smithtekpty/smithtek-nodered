@@ -14,6 +14,23 @@
         </label>
         <input type="text" id="node-input-device_label" data-i18n="[placeholder]smithtek.device_label.placeholder" />
     </div>
+
+    <div class="form-row" id="input-variable-label">
+        <label for="node-input-label_variable static-label">
+            <i class="icon-tag"></i>
+            <span data-i18n="smithtek.label_variable.label"></span>
+        </label>
+        <input type="text" id="node-input-label_variable" data-i18n="[placeholder]smithtek.label_variable.placeholder" />
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-simple_node static-label">
+            <i class="icon-tag"></i>
+            <span data-i18n="smithtek.simple_node.label"></span>
+        </label>
+        <input type="checkbox" id="node-input-simple_node" style="/*! text-align: left; */width: auto;vertical-align: sub;"/>
+    </div>
+
 </script>
 
 <script type="text/x-red" data-help-name="smithtek_out">
@@ -23,35 +40,40 @@
     Uses the <a href="https://github.com/mqttjs/MQTT.js" target="_blank">MQTT</a> to make the connection and publish
     the packet.
     </p>
-
     <p>
-    The message can contain the following properties, all of them except the <i>payload</i> can also be configured in
-    the node settings by double clicking it:<br />
+    The message can contain the following properties, all of them except the <i>payload</i> can also be configured in the node settings by double clicking it:<br />
 
     <ul>
         <li>
             <b>msg.token</b> (required) - The token of your account.
         </li>
         <li>
-            <b>msg.device_label</b> (optional) - The name of the Device in which the packet will be published. If
-            no Device exists with this label, it will be automatically created.
+            <b>msg.device_label</b> (optional) - The name of the Device in which the packet will be published. If no Device exists with this label, it will be automatically created. Examples: weather-station, truck.
         </li>
         <li>
-            <b>msg.payload</b> (optional) - The values to be published on the given Device. Each key is the label of the
-            variable.
+            <b>msg.payload</b> (optional) - The values to be published on the given Device. Each key is the label of the variable. Example: {"speed": 30, "position": {"value":1, "context": {"lat": 6.25, "lng": -72.3056}}}
         </li>
     </ul>
     </p>
+
+    <h2>Simple Node</h2>
+    <p>
+        Simple node mode publishes only to a single variable label. If set, the node will make available for you an input text area to set the variable label that will store the values sent. The msg.payload must contain only the value to publish to the SmithTek API.
+    </p>
+
 </script>
 
 <script type="text/javascript">
+
     RED.nodes.registerType('smithtek_out', {
         category: 'output',
         color : "#B9B6B8",
         defaults : {
             token : {value: ""},
             label_device: {value: ""},
-            device_label: {value: ""}
+            device_label: {value: ""},
+            label_variable: {value: ""},
+            simple_node : {value: true},
         },
         inputs : 1,
         outputs : 0,
@@ -61,8 +83,19 @@
         },
         labelStyle : function() {
             return this.name ? "node_label_italic" : "";
+        },
+        oneditprepare: function (argument) {
+            var label_variable_text_box = document.getElementById("input-variable-label");
+            $("#node-input-simple_node").change(function () {
+                if (this.checked) {
+                    label_variable_text_box.setAttribute("style","display: block;")
+                } else {
+                    label_variable_text_box.setAttribute("style","display: none;")
+                }
+            });
         }
     });
+
 </script>
 
 <style>
