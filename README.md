@@ -24,6 +24,8 @@ These are the properties you should configure, by double clicking the node:
 
 * __Variable label__: The label of the Variable to which you will suscribe.
 
+* __Simple Node__: Simple node mode subscribes to a topic to retrieve **only** the last value of the variable using the SmithTek API.
+
 ### SmithTek Out
 
 This node is used to publish to an SmithTek Variable. It will receive a value from a previous node and publish it to your Variable.
@@ -36,6 +38,10 @@ These are the properties you should configure, by double clicking the node:
 
 * __msg.payload:__ This payload will contain all the values that will be sent to the Device. It's structured to use the key of the
 object as the Variable label and the value of the key as the value to send to SmithTek, e.g. `{"variable-label": 42}`
+
+* __Simple Node__: Simple node mode publishes only to a single variable label. If set, the node will make available for you an input text area to set the variable label that will store the values sent. The msg.payload **must contain only the numerical value** to publish to the SmithTek API, not an object type. Example: 30, 20.
+
+* __Variable label__: If simple node is checked, this fiel will be visible. Fill it with the variable label that should store values.
 
 ## Authentication
 
