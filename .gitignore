@@ -73,4 +73,5 @@ typings/
 .serverless
 
 # System files
-.DS_Store
+.DS_Storea
+.idea
