@@ -5,7 +5,8 @@
   "node-red": {
     "nodes": {
       "smithtek_in": "smithtek/smithtek_in.js",
-      "smithtek_out": "smithtek/smithtek_out.js"
+      "smithtek_out": "smithtek/smithtek_out.js",
+      "smithtek_sequencer": "smithtek/smithtek_sequencer.js"
     }
   },
   "license": "MIT",
