@@ -11,6 +11,7 @@ have any doubts installing nodes in the platform.
 ## Usage
 
 There are two different nodes: One for reading information from SmithTek and another one for sending information to SmithTek.
+There is also a squencer node which will send a `true` value to each of its outputs, delaying a set amount of time between them.
 
 ### SmithTek In
 
@@ -46,6 +47,10 @@ object as the Variable label and the value of the key as the value to send to Sm
 ## Authentication
 
 The authentication is made by using the __Token__ field in your nodes.
+
+### SmithTek Sequencer
+
+This node is used to trigger other nodes with `true` values in the `msg.payload`.
 
 ## Development
 
