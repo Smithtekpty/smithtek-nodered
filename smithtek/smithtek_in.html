@@ -1,89 +1,97 @@
 <script type="text/x-red" data-template-name="smithtek_in">
-    <div class="form-row">
-        <label for="node-input-token static-label">
-            <i class="icon-lock"></i>
-            <span data-i18n="smithtek.token.label"></span>
-        </label>
-        <input type="text" id="node-input-token" data-i18n="[placeholder]smithtek.token.placeholder" />
-    </div>
+  <div class="form-row">
+      <label for="node-input-name">
+          <i class="icon-tag"></i>
+          <span data-i18n="smithtek.name"></span>
+      </label>
+      <input type="text" id="node-input-name" data-i18n="[placeholder]smithtek.name" />
+  </div>
 
-    <div class="form-row">
-        <label for="node-input-device_label static-label">
-            <i class="icon-tag"></i>
-            <span data-i18n="smithtek.device_label.label"></span>
-        </label>
-        <input type="text" id="node-input-device_label" data-i18n="[placeholder]smithtek.device_label.placeholder" />
-    </div>
+  <div class="form-row">
+      <label for="node-input-token static-label">
+          <i class="icon-lock"></i>
+          <span data-i18n="smithtek.token.label"></span>
+      </label>
+      <input type="text" id="node-input-token" data-i18n="[placeholder]smithtek.token.placeholder" />
+  </div>
 
-    <div class="form-row">
-        <label for="node-input-label_variable static-label">
-            <i class="icon-tag"></i>
-            <span data-i18n="smithtek.label_variable.label"></span>
-        </label>
-        <input type="text" id="node-input-label_variable" data-i18n="[placeholder]smithtek.label_variable.placeholder" />
-    </div>
+  <div class="form-row">
+      <label for="node-input-device_label static-label">
+          <i class="icon-tag"></i>
+          <span data-i18n="smithtek.device_label.label"></span>
+      </label>
+      <input type="text" id="node-input-device_label" data-i18n="[placeholder]smithtek.device_label.placeholder" />
+  </div>
 
-    <div class="form-row">
-        <label for="node-input-simple_node static-label">
-            <i class="icon-tag"></i>
-            <span data-i18n="smithtek.simple_node.label"></span>
-        </label>
-        <input type="checkbox" id="node-input-simple_node" style="/*! text-align: left; */width: auto;vertical-align: sub;"/>
-    </div>
+  <div class="form-row">
+      <label for="node-input-label_variable static-label">
+          <i class="icon-tag"></i>
+          <span data-i18n="smithtek.label_variable.label"></span>
+      </label>
+      <input type="text" id="node-input-label_variable" data-i18n="[placeholder]smithtek.label_variable.placeholder" />
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-simple_node static-label">
+          <i class="icon-tag"></i>
+          <span data-i18n="smithtek.simple_node.label"></span>
+      </label>
+      <input type="checkbox" id="node-input-simple_node" style="/*! text-align: left; */width: auto;vertical-align: sub;"/>
+  </div>
 </script>
 
-
 <script type="text/x-red" data-help-name="smithtek_in">
-    <p>Fetch the last value from SmithTek and send it as a message to other nodes.</p>
+  <p>Fetch the last value from SmithTek and send it as a message to other nodes.</p>
 
-    <p>
-    Uses the <a href="https://github.com/mqttjs/MQTT.js" target="_blank">MQTT</a> to make the connection and suscribe
-    to the channel.
-    </p>
+  <p>
+  Uses the <a href="https://github.com/mqttjs/MQTT.js" target="_blank">MQTT</a> to make the connection and suscribe
+  to the channel.
+  </p>
 
-    <p>
-    You must configure your node by double clicking it and filling the following information, all fields are required:
-    <br />
+  <p>
+  You must configure your node by double clicking it and filling the following information, all fields are required:
+  <br />
 
-    <ul>
-        <li>
-            <b>Token</b> - Your SmithTek account token.
-        </li>
-        <li>
-            <b>Device label</b> - The label of the Device that contains the Variable where you want to fetch the values.
-        </li>
-        <li>
-            <b>Variable label</b> - The label of the Variable that you want to fetch the values from.
-        </li>
-    </ul>
-    </p>
+  <ul>
+      <li>
+          <b>Token</b> - Your SmithTek account token.
+      </li>
+      <li>
+          <b>Device label</b> - The label of the Device that contains the Variable where you want to fetch the values.
+      </li>
+      <li>
+          <b>Variable label</b> - The label of the Variable that you want to fetch the values from.
+      </li>
+  </ul>
+  </p>
 
-    <h2>Simple Node</h2>
-    <p>
-        Simple node mode subscribes to a topic to retrieve only the last value of the variable using the SmithTek API.
-    </p>
+  <h2>Simple Node</h2>
+  <p>
+      Simple node mode subscribes to a topic to retrieve only the last value of the variable using the SmithTek API.
+  </p>
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('smithtek_in', {
-        category: 'input',
-        color : "#B9B6B8",
-        defaults : {
-            token : {value : ""},
-            device_label : {value : ""},
-            label_device : {value: ""},
-            label_variable : {value: ""},
-            simple_node : {value: true},
-        },
-        inputs : 0,
-        outputs : 1,
+  RED.nodes.registerType("smithtek_in", {
+    category: "input",
+    color: "#B9B6B8",
+    defaults: {
+      name: { value: "SmithTek In" },
+      token: { value: "" },
+      device_label: { value: "" },
+      label_device: { value: "" },
+      label_variable: { value: "" },
+      simple_node: { value: true }
+    },
+    inputs: 0,
+    outputs: 1,
 
-        icon : "smithtek.png",
-        label : function() {
-            return this.name || this.to || "smithtek input";
-        },
-        labelStyle : function() {
-            return this.name ? "node_label_italic" : "";
-        }
-    });
+    icon: "smithtek.png",
+    label: function() {
+      return this.name || this.to || "smithtek input";
+    },
+    labelStyle: function() {
+      return this.name ? "node_label_italic" : "";
+    }
+  });
 </script>
