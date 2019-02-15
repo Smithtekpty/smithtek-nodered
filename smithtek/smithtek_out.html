@@ -1,5 +1,13 @@
 <script type="text/x-red" data-template-name="smithtek_out">
     <div class="form-row">
+        <label for="node-input-name">
+            <i class="icon-tag"></i>
+            <span data-i18n="smithtek.name"></span>
+        </label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]smithtek.name" />
+    </div>
+
+    <div class="form-row">
         <label for="node-input-token static-label">
             <i class="icon-lock"></i>
             <span data-i18n="smithtek.token.label"></span>
@@ -64,24 +72,24 @@
 </script>
 
 <script type="text/javascript">
-
     RED.nodes.registerType('smithtek_out', {
         category: 'output',
         color : "#B9B6B8",
         defaults : {
-            token : {value: ""},
-            label_device: {value: ""},
-            device_label: {value: ""},
-            label_variable: {value: ""},
-            simple_node : {value: true},
+            name: { value: "SmithTek Out" },
+            token : { value: "" },
+            label_device: { value: "" },
+            device_label: { value: "" },
+            label_variable: { value: "" },
+            simple_node : { value: true },
         },
-        inputs : 1,
-        outputs : 0,
-        icon : "smithtek.png",
-        label : function() {
+        inputs: 1,
+        outputs: 0,
+        icon: "smithtek.png",
+        label: function() {
             return this.name || this.to || "smithtek out";
         },
-        labelStyle : function() {
+        labelStyle: function() {
             return this.name ? "node_label_italic" : "";
         },
         oneditprepare: function (argument) {
