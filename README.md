@@ -1,6 +1,6 @@
 # Node-RED SmithTek Node
 
-This is a [Node-RED](http://nodered.org) node used to interact with the SmithTek service. It publishes and suscribes to one or multiple variables.
+This is a [Node-RED](http://nodered.org) node used to interact with the SmithTek service. It publishes and suscribes to one or multiple variables. It also provides the ability to subscribe to up to 10 Ubidots custom topics.
 
 ## Installation
 
@@ -15,7 +15,7 @@ There is also a squencer node which will send a `true` value to each of its outp
 
 ### SmithTek In
 
-This node is used to suscribe to an Smithtek Variable. It will listen to new values and pass it to further nodes in the `msg.payload`.
+This node is used to suscribe to one or more (up to 10) Smithtek Variable(s). It will listen to new values and pass it to further nodes in the `msg.payload`.
 
 These are the properties you should configure, by double clicking the node:
 
@@ -25,7 +25,15 @@ These are the properties you should configure, by double clicking the node:
 
 * __Variable label__: The label of the Variable to which you will suscribe.
 
+*  __TLS__: By default, all data is sent encrypted via TLS. Uncheck if data should be sent unencrypted.
+
 * __Simple Node__: Simple node mode subscribes to a topic to retrieve **only** the last value of the variable using the SmithTek API.
+
+*  __Add Variable__: Adds an additional variable (up to 10).
+
+The output is a JSON object with the *variable name* as key and the *Last Value*/data point object as value, e.g.: `{"device_label/variable": {"value": 100, "timestamp": 1583523586668, "context": { "key1": "value1", "key2": "value2"}, "created_at": 1583523586732}`
+
+If you get the error: `TypeError: send is not a function`, please run `npm update node-red` and reload Node-Red. You probably run a `0.x` node-red version. This library requires >`1.0`.
 
 ### SmithTek Out
 
@@ -33,16 +41,26 @@ This node is used to publish to an SmithTek Variable. It will receive a value fr
 
 These are the properties you should configure, by double clicking the node:
 
-* __Token__ _or_ __msg.token__: This is your account token.
+* __Token__: This is your account token.
 
-* __Device label__ _or_ __msg.device_label__: The label of the Device to which you want to send the data.
+* __Device label__ _or_ __msg.payload.device_label__: The label of the Device to which you want to send the data. If no Device exists with this label, it will be automatically created. Can be sent dynamically in the message JSON object with the key: `device_label`. If no Device label is sent in the message, it defaults back to the value from the Device Label field. Keep in mind that the Device Label is required.
+
+*  __TLS__: By default all data is sent encrypted via TLS. Uncheck if data should be sent unencrypted.
 
 * __msg.payload:__ This payload will contain all the values that will be sent to the Device. It's structured to use the key of the
 object as the Variable label and the value of the key as the value to send to SmithTek, e.g. `{"variable-label": 42}`
 
-* __Simple Node__: Simple node mode publishes only to a single variable label. If set, the node will make available for you an input text area to set the variable label that will store the values sent. The msg.payload **must contain only the numerical value** to publish to the SmithTek API, not an object type. Example: 30, 20.
+The message can contain the following properties:
 
-* __Variable label__: If simple node is checked, this fiel will be visible. Fill it with the variable label that should store values.
+- `msg.payload.device_label` (optional) - The name of the Device to which the packet will be published. If no Device Label is sent, it takes the Device Label from the *Device Label* field in the node settings.
+
+- `msg.payload` (optional) - The values to be published on the given Device. Each key is the label of the variable.
+
+Example of a simple value JSON message:`{"value": 100}`.
+
+Example of a JSON message providing context data: `{"variable": {"value": 200, "context": {"key1": "value1","key2": "value2"}}}`.
+
+Example of JSON message with multiple variables: `{"variable_1": {"value": 100, "context": {"key1": "value1", "key2": "value2"}}, "variable_2": {"value": 200, "context": { "key1": "value1", "key2": "value2"}}}`.
 
 ## Authentication
 

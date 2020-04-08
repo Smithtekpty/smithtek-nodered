@@ -138,7 +138,7 @@
     </div>
     <!-- VARIABLE 1 -->
     <div id="variable-1" class="form-row form-row__flex form-row__space-between">
-       <input type="checkbox" class="variable__selectVariableCheckbox" style="opacity:0">
+       <input type="checkbox" class="variable__selectVariableCheckbox checkbox-hidden" style="opacity:0">
        <input type="text" id="node-input-label_variable_1" />
        <input class="variable__lastValueCheckbox" type="checkbox" checked id="node-input-checkbox_variable_1_last_value" >
        <label id="node-input-last-value-label-1" data-i18n="smithtek.lastValue"></label>
@@ -613,6 +613,16 @@ RED.nodes.registerType('smithtek_in', {
 }
 .red-ui-button {
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 6px 15px 0 rgba(0, 0, 0, 0.1);
+}
+
+#variable-1 .red-ui-button {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+#variable-1 .checkbox-hidden {
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .reset[type='button'] {

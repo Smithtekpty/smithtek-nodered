@@ -21,7 +21,7 @@
       "customTopics": {
         "variable1": "Custom Topic"
       },
-      "lastValue": "Last value",
+      "lastValue": "Simple Node",
       "variables": {
         "add": "Add Variable",
         "remove": "Remove Variable",

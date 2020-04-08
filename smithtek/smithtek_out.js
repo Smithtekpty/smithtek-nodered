@@ -110,16 +110,16 @@ module.exports = function (RED) {
       });
   
       self.on('input', function (msg, send, done) {
-        //In case the msg contains a property named'ubidotsDeviceLabel'
+        //In case the msg contains a property named'device_label'
         //it will be taken as device_label, otherwise it takes it from the device_label field
-        var device_label = msg.payload.ubidotsDeviceLabel || config.device_label;
+        var device_label = msg.payload.device_label || config.device_label;
         if (device_label === undefined || device_label === '') {
           console.error(
-            "Device_Label is not defined. The device_label field is probably empty or you didn't include the key 'ubidotsDeviceLabel' in your JSON."
+            "Device_Label is not defined. The device_label field is probably empty or you didn't include the key 'device_label' in your JSON."
           );
         } else {
-          if (msg.payload.ubidotsDeviceLabel) {
-            delete msg.payload.ubidotsDeviceLabel;
+          if (msg.payload.device_label) {
+            delete msg.payload.device_label;
           }
           var values =
             typeof msg.payload !== 'object' || msg.payload === null
