@@ -43,61 +43,61 @@
 </script>
 
 <script type="text/x-red" data-help-name="smithtek_out">
-    <p>Receives a message and uses its values to publish a request to the Ubidots API via MQTT.</p>
-    <p>
-      Double click on the node to configure all the required fields.
-    </p>
+  <p>Receives a message and uses its values to publish a request to the SMITHTEK Service via MQTT.</p>
+  <p>
+    Uses the <a href="https://github.com/mqttjs/MQTT.js" target="_blank" rel="noopener noreferrer">MQTT</a> library to establish the connection and publish to the service.
+  </p>
+  <p>Double click on the node to configure all the required fields.</p>
   <ul>
     <li>
       <p>
-        <b> Name: </b> Label of node in Node-Red workspace. If empty, defaults to: "Ubidots out".
+        <b>Name:</b> Label of node in Node-Red workspace. If empty, defaults to "SmithTek out".
       </p>
     </li>
     <li>
       <p>
-        <b> Token: </b> (required) - Token necessary to authenticate the connection.
+        <b>Token:</b> (Required) - Token necessary to authenticate the connection.
       </p>
     </li>
     <li>
       <p>
-        <b>Device Label: </b> The name of the Device to which the data will be published. If no Device exists with this label, it will be automatically created. Can be sent dynamically in the message JSON object with the key: "device_label". If no Device label is sent in the message, it defaults back to the value from the Device Label field. Keep in mind that the Device Label is required.
+        <b>Device Label:</b> (Required) The Device Label to which the data will be published. If no Device exists with this label in the target account, it will be automatically created. Can be sent dynamically in the input JSON message object with the key "device_label". If no Device label is sent in the message, it defaults back to the value from the Device Label field.
       <p>
     </li>
     <li>
       <p>
-        <b>Variable Label: </b> The label of the Variable to which the node will publish (only required in Simple Node mode).
+        <b>Variable Label:</b> The Variable Label to which the node will publish (only required in Simple Node mode).
       <p>
     </li>
     <li>
       <p>
-        <b>Simple Node: </b> Simple node mode requires a Variable Label. It receives a number and publishes an object with the Variable Label as key and an object as value, e.g. <pre>{ Variable Label : {"value": 100} }</pre>
+        <b>SSL:</b> By default all data is sent encrypted via TLS. Uncheck if data should be sent unencrypted.
       </p>
     </li>
     <li>
       <p>
-        <b>SSL: </b> By default all data is sent encrypted via TLS. Uncheck if data should be sent unencrypted.
+        <b>Simple Node:</b> If selected, the node receives a raw number and publishes an object with the Variable Label as key and an object as value, e.g. <pre>{"variable_label": {"value": 100}}</pre>
       </p>
     </li>
   </ul>
-        The message can contain the following properties:<br />
-
-        <ul>
-            <li>
-                <b>msg.payload.device_label</b> (optional) - The name of the Device to which the packet will be published. If no Device Label is sent, it takes the Device Label from the <i>Device Label</i> field in the node settings.
-            </li>
-            <li>
-                <b>msg.payload</b> (optional) - The values to be published on the given Device. Each key is the label of the variable.
-                <p>Example of a simple value JSON message:<pre>{"value": 100}</pre>
-                <p>Example of a JSON message providing context data: <pre> {"variable": {"value": 200, "context": {"key1": "value1","key2": "value2"}}}</pre>
-                <p>Example of JSON message with multiple variables: <pre>{"variable_1": {"value": 100, "context": {"key1": "value1", "key2": "value2"}}, "variable_2": {"value": 200, "context": { "key1": "value1", "key2": "value2"}}} </pre>
-
-            </li>
-        </ul>
-    </p>
-
-    <p>
-        Refer to the <a href="https://ubidots.com/docs/api/mqtt.html" target="_blank" rel="noopener noreferrer">Ubidots documentation</a> for more information about the functionality of the MQTT broker.
-    </p>
+  <p>
+    The input JSON message object can contain the following properties (only applicable if Simple Node is <b>disable</b>):
+    <ul>
+      <li>
+        <p>
+          <b>msg.payload.device_label</b> (Optional) - The Device Label to which the payload will be published. If the device_label  key doesn't exist, it takes the Device Label from the <i>Device Label</i> field in the node settings.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>msg.payload</b> (Required) - The Variable Labels and its values to be published on the given Device. Each key is the Variable Label.
+          <p>Example of a simple value JSON message:<pre>{"variable_label": 100}</pre>
+          <p>Example of a JSON message providing context data: <pre> {"variable_label": {"value": 200, "context": {"key1": "value1","key2":"value2"}}}</pre>
+          <p>Example of JSON message with multiple variables: <pre>{"variable_label1": {"value": 100}, "variable_label2": {"value": 200}}</pre>
+          </p>
+      </li>
+    </ul>
+  </p>
 </script>
 
 <script type="text/javascript">
