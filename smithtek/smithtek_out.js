@@ -1,66 +1,13 @@
-// module.exports = function (RED) {
-//     var mqtt = require("mqtt");
-
-//     function postSmithTek(self, label_device, values, token, label_variable, simple_node) {
-//         var client = mqtt.connect('mqtt://industrial.api.ubidots.com', {username: token, password: ""});
-//         var payload = values;
-
-//         if (simple_node) {
-//             payload = {[label_variable]:values};
-//             payload = JSON.stringify(payload);
-//         }
-
-//         client.on("connect", function () {
-//             client.publish(
-//                 "/v1.6/devices/" + label_device + "",
-//                 payload,
-//                 {'qos': 1, 'retain': false},
-//                 function (error, response) {
-//                     client.end(true, function () {});
-//                 }
-//             );
-//             self.status({ fill: "green", shape: "dot", text: "smithtek.published" });
-//         });
-
-//         client.on('error', function (msg) {
-//             self.status({ fill: "red", shape: "ring", text: "smithtek.error_connecting" });
-//         });
-//     }
-
-//     function SmithTek(n) {
-//         RED.nodes.createNode(this, n);
-//         var self = this;
-
-//         this.on("input", function (msg) {
-//             var label_device = (msg.device_label || n.device_label) || (msg.label_device || n.label_device);
-//             var  values = (!['object', 'number', 'string'].includes(typeof msg.payload) || msg.payload === null) ? {} : msg.payload;
-//             var token = msg.token || n.token;
-//             var label_variable = n.label_variable;
-//             var simple_node = n.simple_node;
-
-//             if (typeof (values) === 'object') {
-//                 values = JSON.stringify(values);
-//             }
-
-//             self.status({ fill: "green", shape: "ring", text: "smithtek.connecting" });
-//             postSmithTek(self, label_device, values, token, label_variable, simple_node);
-//         });
-//     }
-
-//     RED.nodes.registerType("smithtek_out", SmithTek);
-// };
-
 module.exports = function (RED) {
     var mqtt = require('mqtt');
     var fs = require('fs');
     var path = require('path');
   
-    function UbidotsNode(config) {
+    function SmithTekNode(config) {
       RED.nodes.createNode(this, config);
       var self = this;
       var ENDPOINT_URLS = {
         business: 'industrial.api.ubidots.com',
-        educational: 'things.ubidots.com'
       };
       var useTLS = config.tls_checkbox;
       var isSimpleNode = config.simple_node_checkbox;
@@ -74,7 +21,7 @@ module.exports = function (RED) {
         function () {}
       );
   
-      var endpointUrl = ENDPOINT_URLS[config.tier] || ENDPOINT_URLS.business;
+      var endpointUrl = ENDPOINT_URLS.business;
       var token = config.token;
       var client = mqtt.connect(URL_PREFIX + endpointUrl, {
         username: token,
@@ -156,6 +103,6 @@ module.exports = function (RED) {
       });
     }
   
-    RED.nodes.registerType('smithtek_out', UbidotsNode);
+    RED.nodes.registerType('smithtek_out', SmithTekNode);
   };
   
