@@ -45,10 +45,14 @@ These are the properties you should configure, by double clicking the node:
 
 * __Device label__ _or_ __msg.payload.device_label__: The label of the Device to which you want to send the data. If no Device exists with this label, it will be automatically created. Can be sent dynamically in the message JSON object with the key: `device_label`. If no Device label is sent in the message, it defaults back to the value from the Device Label field. Keep in mind that the Device Label is required.
 
+* __Variable label__: The label of the Variable to which the node will publish (only required in simple node mode).
+
 *  __TLS__: By default all data is sent encrypted via TLS. Uncheck if data should be sent unencrypted.
 
+* __Simple Node__: Simple node mode requires a _Variable Label_. It receives a number and publishes an object with the _Variable Label_ as key and an object as value, e.g. `{ Variable Label : {"value": 100} }`.
+
 * __msg.payload:__ This payload will contain all the values that will be sent to the Device. It's structured to use the key of the
-object as the Variable label and the value of the key as the value to send to SmithTek, e.g. `{"variable-label": 42}`
+object as the _Variable Label_ and the value of the key as the value to send to SmithTek, e.g. `{"variable-label": 42}`
 
 The message can contain the following properties:
 
