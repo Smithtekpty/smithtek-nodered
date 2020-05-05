@@ -130,53 +130,53 @@
 </script>
 
 <script type="text/x-red" data-help-name="smithtek_in">
-  <p>Subscribes to up to 10 variables or topics and sends them as a message to other nodes.</p>
-
+  <p>Subscribes to up to 10 Variable Labels in SMITHTEK Service via MQTT and sends the results as a message to other nodes.</p>
   <p>
-      Uses the <a href="https://github.com/mqttjs/MQTT.js" target="_blank" rel="noopener noreferrer">MQTT</a> library to establish the connection and suscribe to the variable or topic.
+      Uses the <a href="https://github.com/mqttjs/MQTT.js" target="_blank" rel="noopener noreferrer">MQTT</a> library to establish the connection and suscribe to the Variable Labels.
   </p>
-
+  <p>Double click on the node to configure all the required fields.</p>
+  <ul>
+      <li>
+        <p>
+          <b>Name:</b> Label of node in Node-Red workspace. If empty, defaults to: "SmithTek in".
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>Token:</b> (Required) - Token necessary to authenticate the connection.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>Device Label:</b> (Required) – The Device Label to which the node subscribes.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>SSL: </b> By default, all data is sent encrypted via TLS. Uncheck if data should be sent unencrypted.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>Variable Label:</b> (Required) - The Variable Label the node subscribes to.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>Simple Node:</b> By default, the node subscribes to the Last Value of the variable. Uncheck to subscribe to the completDot object.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>Add Variable:</b> Adds an additional Variable Label (up to 10).
+        </p>
+      </li>
+  </ul>
   <p>
-      Double click on the node to configure all the required fields.
-
-
-      <ul>
-          <p>
-              <b> Name: </b> Label of node in Node-Red workspace. If empty, defaults to: "SmithTek in".
-            </p>
-          </li>
-          <li>
-            <p>
-              <b> Token: </b> (required) - Token necessary to authenticate the connection.
-            </p>
-          </li>
-          <li>
-            <p>
-              <b>Device label</b> - The label of the Device to which the node subscribes. Please keep in mind that this field is neglected in case custom topics are used.
-            </p>
-          </li>
-          <li>
-            <p>
-              <b>SSL: </b> By default, all data is sent encrypted via TLS. Uncheck if data should be sent unencrypted.
-            </p>
-          </li>
-          <li>
-            <p>
-              <b>Variable Label: </b> (required) - The name of the Variable the node subscribes to.
-            </p>
-          </li>
-          <li>
-            <p>
-              <b>Simple Node: </b> By default, the node subscribes to the Last Value of the variable. Uncheck to subscribe to the complete data point object.
-            </p>
-          </li>
-          <li>
-            <p>
-              <b>Add Variable: </b> Adds an additional variable/topic (up to 10).
-            </p>
-          </li>
-      </ul>
-      <p>The output is a JSON object with the topic as key and the Last Value/data point object as value, e.g.: <pre>{"device_label/variable": {"value": 100, "timestamp": 1583523586668, "context": { "key1": "value1", "key2": "value2"}, "created_at": 1583523586732} </pre></p>
+    If the Simple Node checkbox is selected, the output is a JSON object with the Variable Label as key and the Last Value object avalue, e.g.: <pre>{"variable_label": {"value": 100} </pre>
+  </p>
+  <p>
+    If the Simple Node checkbox is not selected, the output is a JSON object with the Variable Label as key and the Dot object avalue, e.g.: <pre>{"variable_label": {"value": 100, "timestamp": 1583523586668, "context": { "key1": "value1", "key2": "value2"}"created_at": 1583523586732}}</pre>
   </p>
 
   <hr>
