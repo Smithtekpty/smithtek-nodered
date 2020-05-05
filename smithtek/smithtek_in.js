@@ -307,6 +307,6 @@ function getSubscribePaths(config) {
       paths.push(devicePath);
     }
   }
-
+  
   return paths;
 }

@@ -63,8 +63,9 @@ module.exports = function (RED) {
         educational: 'things.ubidots.com'
       };
       var useTLS = config.tls_checkbox;
+      var isSimpleNode = config.simple_node_checkbox;
       var URL_PREFIX = 'mqtt://';
-  
+      
       var port = 1883;
       var portTLS = 8883;
       var certificate = fs.readFileSync(
@@ -110,22 +111,29 @@ module.exports = function (RED) {
       });
   
       self.on('input', function (msg, send, done) {
+        let values;
         //In case the msg contains a property named'device_label'
         //it will be taken as device_label, otherwise it takes it from the device_label field
-        var device_label = msg.payload.device_label || config.device_label;
+        let device_label = msg.payload.device_label || config.device_label;
         if (device_label === undefined || device_label === '') {
           console.error(
             "Device_Label is not defined. The device_label field is probably empty or you didn't include the key 'device_label' in your JSON."
-          );
-        } else {
-          if (msg.payload.device_label) {
-            delete msg.payload.device_label;
+            );
+          } else {
+            if (msg.payload.device_label) {
+              delete msg.payload.device_label;
+            }
+            if (isSimpleNode) {
+              var variable_label = config.variable_label;
+              let simpleNodeOutput = {};
+              simpleNodeOutput[variable_label] = { "value": msg.payload }; 
+              values = msg.payload === null ? {} : simpleNodeOutput; 
+            } else {
+            values =
+              typeof msg.payload !== 'object' || msg.payload === null
+                ? {}
+                : msg.payload;
           }
-          var values =
-            typeof msg.payload !== 'object' || msg.payload === null
-              ? {}
-              : msg.payload;
-  
           if (typeof values === 'object') {
             values = JSON.stringify(values);
           }
