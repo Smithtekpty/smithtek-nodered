@@ -1,6 +1,6 @@
 {
   "name": "smithtek-nodered",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "description": "NodeRED node to post data on SmithTek using MQTT.",
   "node-red": {
     "nodes": {
