@@ -1,113 +1,160 @@
 <script type="text/x-red" data-template-name="smithtek_out">
     <div class="form-row">
         <label for="node-input-name">
-            <i class="icon-tag"></i>
-            <span data-i18n="smithtek.name"></span>
-        </label>
+          <i class="fa fa-tag"></i>
+          <span data-i18n="smithtek.name"></span>
+      </label>
         <input type="text" id="node-input-name" data-i18n="[placeholder]smithtek.name" />
     </div>
 
     <div class="form-row">
-        <label for="node-input-token static-label">
-            <i class="icon-lock"></i>
-            <span data-i18n="smithtek.token.label"></span>
-        </label>
+        <label for="node-input-token">
+          <i class="fa fa-lock"></i>
+          <span data-i18n="smithtek.token.label"></span>
+      </label>
         <input type="text" id="node-input-token" data-i18n="[placeholder]smithtek.token.placeholder" />
     </div>
 
     <div class="form-row">
-        <label for="node-input-device_label static-label">
-            <i class="icon-tag"></i>
-            <span data-i18n="smithtek.device_label.label"></span>
-        </label>
+        <label for="node-input-device_label">
+          <i class="fa fa-tag"></i>
+          <span data-i18n="smithtek.device_label.label"></span>
+      </label>
         <input type="text" id="node-input-device_label" data-i18n="[placeholder]smithtek.device_label.placeholder" />
     </div>
-
-    <div class="form-row" id="input-variable-label">
-        <label for="node-input-label_variable static-label">
-            <i class="icon-tag"></i>
-            <span data-i18n="smithtek.label_variable.label"></span>
-        </label>
-        <input type="text" id="node-input-label_variable" data-i18n="[placeholder]smithtek.label_variable.placeholder" />
+    <div class="form-row" id="variable_label">
+      <label for="node-input-variable_label">
+        <i class="fa fa-tag"></i>
+        <span data-i18n="smithtek.variable_label.label" style="font-size:13px"></span>
+    </label>
+      <input type="text" id="node-input-variable_label" data-i18n="[placeholder]smithtek.variable_label.placeholder" />
+  </div>
+   <div class="form-row">
+     <input type="checkbox" checked id="node-input-tls_checkbox" style="display: inline-block; width: auto; vertical-align: top;"></label>
+     <label for="node-input-tls_checkbox" style="width: calc(100% - 170px); margin-left:15px" data-i18n="smithtek.tls.label"></label>
     </div>
-
     <div class="form-row">
-        <label for="node-input-simple_node static-label">
-            <i class="icon-tag"></i>
-            <span data-i18n="smithtek.simple_node.label"></span>
-        </label>
-        <input type="checkbox" id="node-input-simple_node" style="/*! text-align: left; */width: auto;vertical-align: sub;"/>
+      <input type="checkbox" checked id="node-input-simple_node_checkbox" style="display: inline-block; width: auto; vertical-align: top;"></label>
+      <label for="node-input-simple_node_checkbox" style="width: calc(100% - 170px); margin-left:15px" data-i18n="smithtek.simple_node"></label>
     </div>
 
+
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="smithtek_out">
-    <p>Receives a message and uses its values to make a request to the SmithTek API.</p>
-
-    <p>
-    Uses the <a href="https://github.com/mqttjs/MQTT.js" target="_blank">MQTT</a> to make the connection and publish
-    the packet.
-    </p>
-    <p>
-    The message can contain the following properties, all of them except the <i>payload</i> can also be configured in the node settings by double clicking it:<br />
-
+  <p>Receives a message and uses its values to publish a request to the SMITHTEK Service via MQTT.</p>
+  <p>
+    Uses the <a href="https://github.com/mqttjs/MQTT.js" target="_blank" rel="noopener noreferrer">MQTT</a> library to establish the connection and publish to the service.
+  </p>
+  <p>Double click on the node to configure all the required fields.</p>
+  <ul>
+    <li>
+      <p>
+        <b>Name:</b> Label of node in Node-Red workspace. If empty, defaults to "SmithTek out".
+      </p>
+    </li>
+    <li>
+      <p>
+        <b>Token:</b> (Required) - Token necessary to authenticate the connection.
+      </p>
+    </li>
+    <li>
+      <p>
+        <b>Device Label:</b> (Required) The Device Label to which the data will be published. If no Device exists with this label in the target account, it will be automatically created. Can be sent dynamically in the input JSON message object with the key "device_label". If no Device label is sent in the message, it defaults back to the value from the Device Label field.
+      <p>
+    </li>
+    <li>
+      <p>
+        <b>Variable Label:</b> The Variable Label to which the node will publish (only required in Simple Node mode).
+      <p>
+    </li>
+    <li>
+      <p>
+        <b>SSL:</b> By default all data is sent encrypted via TLS. Uncheck if data should be sent unencrypted.
+      </p>
+    </li>
+    <li>
+      <p>
+        <b>Simple Node:</b> If selected, the node receives a raw number and publishes an object with the Variable Label as key and an object as value, e.g. <pre>{"variable_label": {"value": 100}}</pre>
+      </p>
+    </li>
+  </ul>
+  <p>
+    The input JSON message object can contain the following properties (only applicable if Simple Node is <b>disable</b>):
     <ul>
-        <li>
-            <b>msg.token</b> (required) - The token of your account.
-        </li>
-        <li>
-            <b>msg.device_label</b> (optional) - The name of the Device in which the packet will be published. If no Device exists with this label, it will be automatically created. Examples: weather-station, truck.
-        </li>
-        <li>
-            <b>msg.payload</b> (optional) - The values to be published on the given Device. Each key is the label of the variable. Example: {"speed": 30, "position": {"value":1, "context": {"lat": 6.25, "lng": -72.3056}}}
-        </li>
+      <li>
+        <p>
+          <b>msg.payload.device_label</b> (Optional) - The Device Label to which the payload will be published. If the device_label  key doesn't exist, it takes the Device Label from the <i>Device Label</i> field in the node settings.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>msg.payload</b> (Required) - The Variable Labels and its values to be published on the given Device. Each key is the Variable Label.
+          <p>Example of a simple value JSON message:<pre>{"variable_label": 100}</pre>
+          <p>Example of a JSON message providing context data: <pre> {"variable_label": {"value": 200, "context": {"key1": "value1","key2":"value2"}}}</pre>
+          <p>Example of JSON message with multiple variables: <pre>{"variable_label1": {"value": 100}, "variable_label2": {"value": 200}}</pre>
+          </p>
+      </li>
     </ul>
-    </p>
-
-    <h2>Simple Node</h2>
-    <p>
-        Simple node mode publishes only to a single variable label. If set, the node will make available for you an input text area to set the variable label that will store the values sent. The msg.payload must contain only the value to publish to the SmithTek API.
-    </p>
-
+  </p>
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('smithtek_out', {
-        category: 'output',
-        color : "#B9B6B8",
-        defaults : {
-            name: { value: "SmithTek Out" },
-            token : { value: "" },
-            label_device: { value: "" },
-            device_label: { value: "" },
-            label_variable: { value: "" },
-            simple_node : { value: true },
-        },
-        inputs: 1,
-        outputs: 0,
-        icon: "smithtek.png",
-        label: function() {
-            return this.name || this.to || "smithtek out";
-        },
-        labelStyle: function() {
-            return this.name ? "node_label_italic" : "";
-        },
-        oneditprepare: function (argument) {
-            var label_variable_text_box = document.getElementById("input-variable-label");
-            $("#node-input-simple_node").change(function () {
-                if (this.checked) {
-                    label_variable_text_box.setAttribute("style","display: block;")
-                } else {
-                    label_variable_text_box.setAttribute("style","display: none;")
-                }
-            });
-        }
-    });
+  RED.nodes.registerType("smithtek_out", {
+    category: "output",
+    color: "#B9B6B8",
+    defaults: {
+      name: {
+        value: "",
+      },
+      token: {
+        value: "",
+        required: true,
+      },
+      label_device: { value: "" },
+      device_label: {
+        value: "",
+        required: true,
+      },
+      variable_label: { value: "", required: true },
+      tls_checkbox: { value: true },
+      simple_node_checkbox: { value: true },
+    },
+    inputs: 1,
+    outputs: 0,
+    icon: "smithtek.png",
 
+    label: function () {
+      return this.name || this.to || "SmithTek Out";
+    },
+    labelStyle: function () {
+      return this.name ? "node_label_italic" : "";
+    },
+    oneditprepare: function () {
+      if ($('#node-input-simple_node_checkbox').is(':checked')) {
+        $('#variable_label').show();
+      }else{
+        $('#variable_label').hide();
+      }
+
+      $('#node-input-simple_node_checkbox').on('click', function () { 
+        if ($('#node-input-simple_node_checkbox').is(':checked')) {
+          $('#variable_label').show();
+        }else{
+          $('#variable_label').hide();
+        }
+      });
+    }
+  });
 </script>
 
 <style>
-.static-label {
+  .form-row label {
     width: 25%;
-}
+  }
+
+  .form-row select {
+    width: 70%;
+  }
 </style>
